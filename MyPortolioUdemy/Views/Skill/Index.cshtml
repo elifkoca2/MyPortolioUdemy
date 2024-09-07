@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "SkillList";
+    Layout = "~/Views/Layout/Index.cshtml";
+}
+
+@{
+    var progressBarColors = new List<string> { "bg-success", "bg-danger", "bg-warning", "bg-primary", "bg-info" };
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Yetenekler</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Yetenek Listesi</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-sub mb-4">
+                            Yetenekler ile ilgili işlemleri aşağıdaki panelden yapabilirsiniz.
+                        </div>
+
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                var random = new Random();
+                                var randomIndex = random.Next(progressBarColors.Count);
+                                var progressBarColor = progressBarColors[randomIndex];
+
+                                <div class="col-md-6 mb-4">
+                                    <div class="progress-card card shadow-sm p-3">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <h5 class="text-primary">@item.Title</h5>
+                                            <span class="text-muted fw-bold">@item.Value%</span>
+                                        </div>
+                                        <div class="progress" style="height: 20px;">
+                                            <div class="progress-bar @progressBarColor" role="progressbar" style="width: @(item.Value)%;" aria-valuenow="@item.Value" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <a href="/Skill/UpdateSkill/@item.SkillId" class="btn btn-outline-primary btn-sm">Güncelle</a>
+                                            <a href="/Skill/DeleteSkill/@item.SkillId" class="btn btn-outline-danger btn-sm">Sil</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a href="/Skill/AddSkill/" class="btn btn-primary">Yeni Yetenek Ekle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
